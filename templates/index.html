@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Explore · InkSpace{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">IDEAS WORTH SHARING</p>
+  <h1>Stories, thoughts<br><span>and everything between.</span></h1>
+  <p class="hero-copy">A simple space to publish your ideas and connect through conversations.</p>
+  {% if not current_user %}<a class="button" href="{{ url_for('register') }}">Start writing <span>→</span></a>{% endif %}
+</section>
+<div class="section-heading"><div><p class="eyebrow">THE COMMUNITY</p><h2>Latest stories</h2></div><span class="muted">{{ posts|length }} posts</span></div>
+{% if posts %}
+<div class="post-grid">
+{% for post in posts %}
+  <article class="post-card">
+    <div class="post-meta"><span class="avatar">{{ post.username[0]|upper }}</span><span>{{ post.username }}</span><span>·</span><span>{{ post.created_at[:10] }}</span></div>
+    <h3><a href="{{ url_for('view_post', post_id=post.id) }}">{{ post.title }}</a></h3>
+    <p class="excerpt">{{ post.content[:180] }}{% if post.content|length > 180 %}…{% endif %}</p>
+    <a class="read-link" href="{{ url_for('view_post', post_id=post.id) }}">Read story →</a>
+    <span class="comment-count">☷ {{ post.comment_count }} comments</span>
+  </article>
+{% endfor %}
+</div>
+{% else %}
+<div class="empty"><div class="empty-icon">✎</div><h3>No stories yet</h3><p>Be the first to share something with the community.</p>{% if current_user %}<a class="button" href="{{ url_for('new_post') }}">Create the first post</a>{% else %}<a class="button" href="{{ url_for('register') }}">Create an account</a>{% endif %}</div>
+{% endif %}
+{% endblock %}

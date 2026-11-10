@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block title %}{{ code }} · InkSpace{% endblock %}{% block content %}<div class="empty"><h1>{{ code }}</h1><h3>Oops, something went wrong.</h3><p>{{ message }}</p><a class="button" href="{{ url_for('index') }}">Go home</a></div>{% endblock %}
